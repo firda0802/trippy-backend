@@ -9,6 +9,6 @@ import com.java.pabw.trippy.app.entity.OrdersDetailsPlane;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrdersDetailsPlaneRepo extends JpaRepository<OrdersDetailsPlane, Integer>{
+public interface OrdersDetailsPlaneRepository extends JpaRepository<OrdersDetailsPlane, Integer>{
     Optional<OrdersDetailsPlane> findById(Integer idOrderDetails);
 }

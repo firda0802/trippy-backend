@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.java.pabw.trippy.app.entity.Schedule;
+import com.java.pabw.trippy.app.entity.Pricing;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScheduleRepo extends JpaRepository<Schedule, Integer>{
-    Optional<Schedule> findById(Integer scheduleId);
+public interface PricingRepository extends JpaRepository<Pricing, Integer>{
+    Optional<Pricing> findById(Integer pricingId);
 }

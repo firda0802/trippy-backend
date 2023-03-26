@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.java.pabw.trippy.app.entity.BookingHotel;
+import com.java.pabw.trippy.app.entity.OrdersPlane;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookingHotelRepo extends JpaRepository<BookingHotel, Integer>{
-    Optional<BookingHotel> findById(Integer idBooking);
+public interface OrdersPlaneRepository extends JpaRepository<OrdersPlane, Integer>{
+    Optional<OrdersPlane> findById(Integer idOrder);
 }

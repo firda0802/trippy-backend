@@ -9,6 +9,6 @@ import com.java.pabw.trippy.app.entity.Hotel;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HotelRepo extends JpaRepository<Hotel, Integer>{
+public interface HotelRepository extends JpaRepository<Hotel, Integer>{
     Optional<Hotel> findById(Integer hotelId);
 }

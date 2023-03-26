@@ -9,7 +9,7 @@ import com.java.pabw.trippy.app.entity.DetailsBookingHotel;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DetailsBookingHotelRepo extends JpaRepository<DetailsBookingHotel, Integer> {
+public interface DetailsBookingHotelRepository extends JpaRepository<DetailsBookingHotel, Integer> {
     Optional<DetailsBookingHotel> findById(Integer idBookingDetails);
     
 }

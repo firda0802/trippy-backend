@@ -1,5 +1,5 @@
 package com.java.pabw.trippy.app.repository;
-import com.java.pabw.trippy.app.entity.Users;
+import com.java.pabw.trippy.app.models.Users;
 
 import java.util.List;
 import java.util.Optional;

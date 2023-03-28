@@ -1,5 +1,5 @@
 package com.java.pabw.trippy.app.repository;
-import com.java.pabw.trippy.app.entity.Airport;
+import com.java.pabw.trippy.app.models.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

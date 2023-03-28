@@ -1,5 +1,5 @@
 package com.java.pabw.trippy.app.repository;
-import com.java.pabw.trippy.app.entity.Notifications;
+import com.java.pabw.trippy.app.models.Notifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

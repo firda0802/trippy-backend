@@ -1,7 +1,6 @@
 package com.java.pabw.trippy.app.repository;
-import com.java.pabw.trippy.app.entity.Seats;
+import com.java.pabw.trippy.app.models.Seats;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 public interface SeatsRepository extends JpaRepository<Seats, Integer>{

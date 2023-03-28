@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.java.pabw.trippy.app.entity.PassengerType;
+import com.java.pabw.trippy.app.models.PassengerType;
 
 import org.springframework.stereotype.Repository;
 

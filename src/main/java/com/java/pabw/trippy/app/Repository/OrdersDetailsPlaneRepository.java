@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.java.pabw.trippy.app.entity.OrdersDetailsPlane;
+import com.java.pabw.trippy.app.models.OrdersDetailsPlane;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,9 @@
 package com.java.pabw.trippy.app.service;
 
-import com.java.pabw.trippy.app.DTO.ReqUpdatePayment;
 import com.java.pabw.trippy.app.models.Payment;
-import com.java.pabw.trippy.app.repository.PaymentRepository;
+import com.java.pabw.trippy.app.Repository.PaymentRepository;
+import com.java.pabw.trippy.app.dto.ReqUpdatePayment;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

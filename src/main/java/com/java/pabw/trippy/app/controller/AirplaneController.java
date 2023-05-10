@@ -1,67 +1,89 @@
 package com.java.pabw.trippy.app.controller;
-package com.java.pabw.trippy.app.repository.AirplaneRepository;
 
-import org.springframework.web.bind.annotation.*;
-import com.java.pabw.trippy.app.DTO.Messages;
-import com.java.pabw.trippy.app.DTO.ReqUpdatePayment;
-import com.java.pabw.trippy.app.service.AdminService;
-import com.java.pabw.trippy.app.utillity.HttpUtility;
-import com.java.pabw.trippy.app.service.InitializeService;
+import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+// import com.java.pabw.trippy.app.Repository.AirplaneRepository;
+import com.java.pabw.trippy.app.dto.AirplaneDTO;
+import com.java.pabw.trippy.app.dto.Messages;
+// import com.java.pabw.trippy.app.dto.Messages;
+import com.java.pabw.trippy.app.models.Airplane;
+// import lombok.extern.slf4j.Slf4j;
+import com.java.pabw.trippy.app.service.CrudService;
+
+
+// @Slf4j
 @RestController
 @RequestMapping("/airplane")
 public class AirplaneController {
 
     @Autowired
-    private AirplaneRepository airplaneRepository;
+    CrudService crudService;
 
-    @GetMapping
-    public List<Airplane> getAllAirplanes() {
-        return airplaneRepository.findAll();
-    }
+        @PostMapping("/add-airplane")
+        public ResponseEntity<Messages> create(@RequestBody ReqCreateAirplane airplane){
+            crudService.saveAirplane(airplane);
+            Messages messages= new Messages();
+            messages.setResponseCode(201);
+            messages.setResponseMessage("Berhasil Ditambahkan");
+            return ResponseEntity.ok().body(messages);
+        }
 
-    @GetMapping("/{id}")
-    //admin and partner only
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public Airplane getAirplaneById(@PathVariable Long id) {
-        return airplaneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + id));
-    }
 
-    @PostMapping
-    public Airplane addAirplane(@RequestBody Airplane airplane) {
-        return airplaneRepository.save(airplane);
-    }
+        @GetMapping("/get-airplane")
+        public ResponseEntity<Messages> get(){
+            Messages messages= new Messages();
+            messages.setResponseCode(200);
+            messages.setResponseMessage("Berhasil Ditampilkan");
+            messages.setData(crudService.findAllAirplanes());
+            return ResponseEntity.ok().body(messages);
+        }
 
-    //admin and partner only
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public Airplane updateAirplane(@PathVariable Long id, @RequestBody Airplane airplaneDetails) {
-        Airplane airplane = airplaneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + id));
 
-        airplane.setType(airplaneDetails.getType());
-        airplane.setAirportId(airplaneDetails.getAirportId());
+        @PutMapping("/update-airplane/{airplaneId}")
+        public ResponseEntity<Messages> update(@PathVariable Integer airplaneId, @RequestBody ReqCreateAirplane airplane){
+            Messages messages= new Messages();
+            Boolean status = crudService.updateAirplane(airplaneId, airplane);
+            if (Boolean.TRUE.equals(status)) {
+                crudService.updateAirplane(airplaneId, airplane);
+                messages.setResponseCode(200);
+                messages.setResponseMessage("Berhasil Diupdate");
+            }
+            else {
+                messages.setResponseCode(204);
+                messages.setResponseMessage("Data tidak ditemukan");
+            }
+            return ResponseEntity.ok().body(messages);
+        }
 
-        return airplaneRepository.save(airplane);
-    }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public void deleteAirplane(@PathVariable Long id) {
-        Airplane airplane = airplaneRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Airplane not found with id: " + id));
-
-        airplaneRepository.delete(airplane);
-    }
+        public ResponseEntity<Messages> delete(@PathVariable Integer airplaneId){
+            Messages messages= new Messages();
+            Boolean status = crudService.deleteAirplane(airplaneId);
+            if (Boolean.TRUE.equals(status)) {
+                crudService.deleteAirplane(airplaneId);
+                messages.setResponseCode(200);
+                messages.setResponseMessage("Berhasil Dihapus");
+            }
+            else {
+                messages.setResponseCode(204);
+                messages.setResponseMessage("Data tidak ditemukan");
+            }
+            return ResponseEntity.ok().body(messages);
+        }
 
 }

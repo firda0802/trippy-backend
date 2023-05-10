@@ -1,4 +1,4 @@
-package com.java.pabw.trippy.app.DTO;
+package com.java.pabw.trippy.app.dto;
 
 import com.java.pabw.trippy.app.utillity.Contanst;
 import com.fasterxml.jackson.annotation.JsonInclude;

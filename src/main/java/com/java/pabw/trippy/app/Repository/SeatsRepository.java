@@ -1,4 +1,4 @@
-package com.java.pabw.trippy.app.repository;
+package com.java.pabw.trippy.app.Repository;
 import com.java.pabw.trippy.app.models.Seats;
 import org.springframework.data.jpa.repository.JpaRepository;
 

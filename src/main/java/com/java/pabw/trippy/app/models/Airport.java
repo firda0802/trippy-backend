@@ -51,4 +51,8 @@ public class Airport implements Serializable{
     @Column(name = "mdate")
     private LocalDateTime mdate;
 
+    public Airport orElseThrow(Object object) {
+        return null;
+    }
+
 }

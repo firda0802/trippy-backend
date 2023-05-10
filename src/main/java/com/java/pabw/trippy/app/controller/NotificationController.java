@@ -1,23 +1,22 @@
 package com.java.pabw.trippy.app.controller;
 
-import org.springframework.web.bind.annotation.*;
-import com.java.pabw.trippy.app.DTO.Messages;
-import com.java.pabw.trippy.app.DTO.ReqUpdatePayment;
-import com.java.pabw.trippy.app.service.AdminService;
-import com.java.pabw.trippy.app.utillity.HttpUtility;
-import com.java.pabw.trippy.app.service.InitializeService;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import javax.management.Notification;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.java.pabw.trippy.app.Repository.NotificationRepository;
+import com.java.pabw.trippy.app.models.Notifications;
 
 @RestController
 @RequestMapping("/notification")
@@ -28,7 +27,7 @@ public class NotificationController {
 
     // Get all notifications
     @GetMapping
-    public List<Notification> getAllNotifications() {
+    public List<Notifications> getAllNotifications() {
         return notificationRepository.findAll();
     }
 
@@ -57,7 +56,7 @@ public class NotificationController {
         notification.setDateNotification(notificationDetails.getDateNotification());
         notification.setStatus(notificationDetails.getStatus());
         notification.setNotificationCategory(notificationDetails.getNotificationCategory());
-        notification.setUser(notificationDetails.getUser());
+        notification.setUser(notificationDetails.getUserData());
 
         return notificationRepository.save(notification);
     }

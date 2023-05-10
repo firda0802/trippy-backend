@@ -1,74 +1,90 @@
 package com.java.pabw.trippy.app.controller;
 
-import org.springframework.web.bind.annotation.*;
-import com.java.pabw.trippy.app.DTO.Messages;
-import com.java.pabw.trippy.app.DTO.ReqUpdatePayment;
-import com.java.pabw.trippy.app.service.AdminService;
-import com.java.pabw.trippy.app.utillity.HttpUtility;
-import com.java.pabw.trippy.app.service.InitializeService;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.java.pabw.trippy.app.Repository.DestinationRepository;
+import com.java.pabw.trippy.app.dto.Messages;
+import com.java.pabw.trippy.app.models.Destination;
+import com.java.pabw.trippy.app.service.CrudService;
+import com.java.pabw.trippy.app.service.InitializeService;
+import com.java.pabw.trippy.app.utillity.HttpUtility;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
-
-
 
 @RestController
-@RequestMapping("/destination")
+@RequestMapping("/dest")
+@Slf4j
 public class DestinationController {
 
     @Autowired
-    private DestinationRepository destinationRepository;
+    InitializeService initializeService;
 
-    // Get all destinations (admin and mitra only)
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public List<Destination> getAllDestinations() {
-        return destinationRepository.findAll();
+    @Autowired
+    CrudService destinationService;
+
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    @GetMapping(value = "/get-list")
+    public ResponseEntity<Messages> listDestination(HttpServletRequest httpServletRequest)
+            throws JsonProcessingException {
+        String writeLog = HttpUtility.writeLogRequest(httpServletRequest, mapper.writeValueAsString("-"));
+        log.info(writeLog);
+        Messages resp = new Messages();
+        resp.success();
+        resp.setData(initializeService.getDestination());
+        String writeLogResp = HttpUtility.writeLogResp(mapper.writeValueAsString(resp));
+        log.info(writeLogResp);
+        return ResponseEntity.ok().body(resp);
     }
 
-    // Get destination by id (admin and mitra only)
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public Destination getDestinationById(@PathVariable Long id) {
-        return destinationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Destination not found with id: " + id));
+    @PostMapping(value = "/add-update")
+    public ResponseEntity<Messages> addUpdateDestination(@RequestBody ReqUpdateDestination req,
+            HttpServletRequest httpServletRequest) throws JsonProcessingException {
+        String writeLog = HttpUtility.writeLogRequest(httpServletRequest, mapper.writeValueAsString(req));
+        log.info(writeLog);
+        boolean status = destinationService.updateAddDestination(req);
+        Messages resp = new Messages();
+        if (status) {
+            resp.success();
+        } else {
+            resp.notFound();
+        }
+
+        String writeLogResp = HttpUtility.writeLogResp(mapper.writeValueAsString(resp));
+        log.info(writeLogResp);
+        return ResponseEntity.ok().body(resp);
     }
 
-    // Add new destination (admin only)
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public Destination addDestination(@RequestBody Destination destination) {
-        return destinationRepository.save(destination);
+    @DeleteMapping(value = "/delete/{destId}")
+    public ResponseEntity<Messages> deleteClass(@PathVariable(name = "destId") Integer destId,
+            HttpServletRequest httpServletRequest) throws JsonProcessingException {
+        String writeLog = HttpUtility.writeLogRequest(httpServletRequest, mapper.writeValueAsString(destId));
+        log.info(writeLog);
+        Messages resp = new Messages();
+        Boolean status = destinationService.deleteDestination(destId);
+        if (Boolean.TRUE.equals(status)) {
+            resp.success();
+        } else {
+            resp.notFound();
+        }
+        String writeLogResp = HttpUtility.writeLogResp(mapper.writeValueAsString(resp));
+        log.info(writeLogResp);
+        return ResponseEntity.ok().body(resp);
     }
-
-    // Update destination (admin and mitra only)
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MITRA')")
-    public Destination updateDestination(@PathVariable Long id, @RequestBody Destination destinationDetails) {
-        Destination destination = destinationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Destination not found with id: " + id));
-
-        destination.setFrom(destinationDetails.getFrom());
-        destination.setTo(destinationDetails.getTo());
-        destination.setAirplane(destinationDetails.getAirplane());
-
-        return destinationRepository.save(destination);
-    }
-
-    // Delete destination (admin only)
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deleteDestination(@PathVariable Long id) {
-        Destination destination = destinationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Destination not found with id: " + id));
-
-        destinationRepository.delete(destination);
-    }
-
 }

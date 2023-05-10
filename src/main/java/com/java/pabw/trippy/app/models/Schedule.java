@@ -1,7 +1,8 @@
 package com.java.pabw.trippy.app.models;
-import com.java.pabw.trippy.app.DTO.ScheduleAirplane;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.java.pabw.trippy.app.dto.ScheduleAirplane;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

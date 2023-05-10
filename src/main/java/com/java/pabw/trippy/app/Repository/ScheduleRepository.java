@@ -1,4 +1,4 @@
-package com.java.pabw.trippy.app.repository;
+package com.java.pabw.trippy.app.Repository;
 
 import java.util.Optional;
 

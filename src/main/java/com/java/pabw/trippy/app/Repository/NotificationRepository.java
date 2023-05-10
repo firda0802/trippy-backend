@@ -1,4 +1,4 @@
-package com.java.pabw.trippy.app.repository;
+package com.java.pabw.trippy.app.Repository;
 import com.java.pabw.trippy.app.models.Notifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

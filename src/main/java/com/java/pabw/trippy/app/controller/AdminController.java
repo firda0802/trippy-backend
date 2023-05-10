@@ -1,7 +1,7 @@
 package com.java.pabw.trippy.app.controller;
 
-import com.java.pabw.trippy.app.DTO.Messages;
-import com.java.pabw.trippy.app.DTO.ReqUpdatePayment;
+import com.java.pabw.trippy.app.dto.Messages;
+import com.java.pabw.trippy.app.dto.ReqUpdatePayment;
 import com.java.pabw.trippy.app.service.AdminService;
 import com.java.pabw.trippy.app.utillity.HttpUtility;
 import com.java.pabw.trippy.app.service.InitializeService;

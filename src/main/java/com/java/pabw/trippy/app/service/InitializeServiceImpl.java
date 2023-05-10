@@ -1,7 +1,7 @@
 package com.java.pabw.trippy.app.service;
 
 import com.java.pabw.trippy.app.models.*;
-import com.java.pabw.trippy.app.repository.*;
+import com.java.pabw.trippy.app.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

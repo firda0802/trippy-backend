@@ -1,4 +1,4 @@
-package com.java.pabw.trippy.app.DTO;
+package com.java.pabw.trippy.app.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
